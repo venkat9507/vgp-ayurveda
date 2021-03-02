@@ -1,0 +1,83 @@
+function checkall() {
+	var name= document.getElementById('name').value;
+	var email= document.getElementById('email').value;
+	var phone= document.getElementById('phone').value;
+	var subject= document.getElementById('subject').value;
+	var message= document.getElementById('message').value;
+        //var recap= grecaptcha.getResponse();
+//alert(recap); 
+ 
+	
+var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+
+ function phonenumber(inputtxt) { var phoneno = new RegExp("^[0-9?=.*!@#$%^&*]+$"); var pattern = /^[0-9\$\^()+=\-\[\]\\\'\.\/\{\}\|\"\ ]+$/; if(inputtxt.length >5 && inputtxt.length <15 && pattern.test(inputtxt) ) { return true; } else { return false; } }
+
+	if(name =='') {
+    $(".name").addClass('error');
+	$("#name").keyup(function() {
+	  $(".name").removeClass('error');
+    });
+	document.getElementById('name').focus();
+	return false;
+	}
+	else if(email==''){
+	    $(".email").addClass('error');
+	$("#email").keyup(function() {
+	  $(".email").removeClass('error');
+    });
+		document.getElementById('email').focus();
+		return false;
+	}
+	else if(pattern.test(email)== false){
+    $(".email").addClass('errornot');
+	$("#email").keyup(function() {
+	  $(".email").removeClass('errornot');
+    });
+		 document.getElementById('email').focus();
+		 return false;
+	}
+	
+	else if(phone=='' || !phonenumber(phone)){
+	    $(".phone").addClass('error');
+	$("#phone").keyup(function() {
+	  $(".phone").removeClass('error');
+    });
+		document.getElementById('phone').focus();
+		return false;
+	}
+	
+	else if(subject==''){
+	    $(".subject").addClass('error');
+	$("#subject").keyup(function() {
+	  $(".subject").removeClass('error');
+    });
+		document.getElementById('place').focus();
+		return false;
+	}
+
+	else if(message==''){
+	    $(".message").addClass('error');
+	$("#message").keyup(function() {
+	  $(".message").removeClass('error');
+    });
+		document.getElementById('message').focus();
+		return false;
+	}
+	
+	//data:{name:name,email:email,phone:phone,subject:subject,message:message,recap:recap},
+	else{
+		$('div#connect').html("<i style='margin:0px auto;transform: translateX(-50%) translateY(-50%); font-size:60px; position:absolute;top:40%; left:50%; display:inline-block;' class='uk-icon-spinner uk-icon-spin'></i>");
+		$.ajax({
+			type:"POST",
+			url:"callback.php",
+			data:{name:name,email:email,phone:phone,subject:subject,message:message},
+			success: function(info){
+			 $('div#connect').html(info);	
+			}
+		});
+		
+	}
+	
+	}
+
+
